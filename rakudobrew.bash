@@ -23,8 +23,8 @@ _rakudobrew() {
   '
   local backends='
     jvm
-    glr
     moar
+    pre-glr
   '
 
   case "$COMP_CWORD" in
