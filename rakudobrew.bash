@@ -1,29 +1,30 @@
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
+  local commands='
+    current
+    list-available
+    build
+    build-panda
+    triple
+    rehash
+    switch
+    nuke
+    self-upgrade
+    test
+    exec
+    init
+    shell
+    local
+    global
+    version
+    versions
+    which
+    whence
+  '
 
   case "$COMP_CWORD" in
     1)
-      COMPREPLY=( $( compgen -W '
-      current
-      list-available
-      build
-      build-panda
-      triple
-      rehash
-      switch
-      nuke
-      self-upgrade
-      test
-      exec
-      init
-      shell
-      local
-      global
-      version
-      versions
-      which
-      whence
-      ' -- "$cur") )
+      COMPREPLY=( $( compgen -W "$commands" -- "$cur") )
       ;;
     *)
       case "${COMP_WORDS[1]}" in
