@@ -54,6 +54,14 @@ _rakudobrew() {
         test)
           COMPREPLY=( $( compgen -W "$backends all" -- "$cur") )
           ;;
+        local)
+          versions="$(rakudobrew versions | cut -c3-)"
+          COMPREPLY=( $( compgen -W "$versions" -- "$cur") )
+          ;;
+        global)
+          versions="$(rakudobrew versions | cut -c3-)"
+          COMPREPLY=( $( compgen -W "$versions" -- "$cur") )
+          ;;
       esac
       ;;
   esac
