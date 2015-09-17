@@ -2,6 +2,7 @@ _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
   local commands='
     current
+    list
     list-available
     build
     build-panda
