@@ -4,7 +4,6 @@ _rakudobrew() {
   if [ "$COMP_CWORD" -eq 1 ]; then
     COMPREPLY=( $( compgen -W '
       current
-      list
       list-available
       build
       build-panda
@@ -14,6 +13,15 @@ _rakudobrew() {
       nuke
       self-upgrade
       test
+      exec
+      init
+      shell
+      local
+      global
+      version
+      versions
+      which
+      whence
       ' -- "$cur") )
   elif [ "$COMP_CWORD" -ge 2 ]; then
     case "${COMP_WORDS[1]}" in
