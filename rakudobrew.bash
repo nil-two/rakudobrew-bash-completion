@@ -30,7 +30,7 @@ _rakudobrew() {
 
   case "$COMP_CWORD" in
     1)
-      COMPREPLY=( $( compgen -W "$commands" -- "$cur") )
+      COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
       ;;
     *)
       case "${COMP_WORDS[1]}" in
@@ -41,26 +41,22 @@ _rakudobrew() {
               compopt -o nospace
               ;;
             *)
-              COMPREPLY=( $( compgen -W "$backends all" -- "$cur") )
+              COMPREPLY=( $(compgen -W "$backends all" -- "$cur") )
               ;;
           esac
           ;;
         switch)
-          COMPREPLY=( $( compgen -W "$backends" -- "$cur") )
+          COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
           ;;
         nuke)
-          COMPREPLY=( $( compgen -W "$backends" -- "$cur") )
+          COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
           ;;
         test)
-          COMPREPLY=( $( compgen -W "$backends all" -- "$cur") )
+          COMPREPLY=( $(compgen -W "$backends all" -- "$cur") )
           ;;
-        local)
+        local|global)
           versions="$(rakudobrew versions | cut -c3-)"
-          COMPREPLY=( $( compgen -W "$versions" -- "$cur") )
-          ;;
-        global)
-          versions="$(rakudobrew versions | cut -c3-)"
-          COMPREPLY=( $( compgen -W "$versions" -- "$cur") )
+          COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
           ;;
       esac
       ;;
