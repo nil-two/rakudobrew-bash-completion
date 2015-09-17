@@ -21,6 +21,11 @@ _rakudobrew() {
     which
     whence
   '
+  local backends='
+    jvm
+    glr
+    moar
+  '
 
   case "$COMP_CWORD" in
     1)
@@ -35,18 +40,18 @@ _rakudobrew() {
               compopt -o nospace
               ;;
             *)
-              COMPREPLY=( $( compgen -W 'jvm glr moar all' -- "$cur") )
+              COMPREPLY=( $( compgen -W "$backends all" -- "$cur") )
               ;;
           esac
           ;;
         switch)
-          COMPREPLY=( $( compgen -W 'jvm glr moar' -- "$cur") )
+          COMPREPLY=( $( compgen -W "$backends" -- "$cur") )
           ;;
         nuke)
-          COMPREPLY=( $( compgen -W 'jvm glr moar' -- "$cur") )
+          COMPREPLY=( $( compgen -W "$backends" -- "$cur") )
           ;;
         test)
-          COMPREPLY=( $( compgen -W 'jvm glr moar all' -- "$cur") )
+          COMPREPLY=( $( compgen -W "$backends all" -- "$cur") )
           ;;
       esac
       ;;
