@@ -2,9 +2,19 @@ _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
 
   if [ "$COMP_CWORD" -eq 1 ]; then
-    COMPREPLY=( $( compgen -W 'current list list-available
-      build build-panda triple rehash switch nuke
-      self-upgrade test' -- "$cur") )
+    COMPREPLY=( $( compgen -W '
+      current
+      list
+      list-available
+      build
+      build-panda
+      triple
+      rehash
+      switch
+      nuke
+      self-upgrade
+      test
+      ' -- "$cur") )
   elif [ "$COMP_CWORD" -ge 2 ]; then
     case "${COMP_WORDS[1]}" in
       build)
