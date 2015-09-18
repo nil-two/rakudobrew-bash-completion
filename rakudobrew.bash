@@ -14,8 +14,7 @@ _rakudobrew_which() {
   done
 }
 
-_rakudobrew() {
-  local cur="${COMP_WORDS[COMP_CWORD]}"
+_rakudobrew_commands() {
   local commands='
     current
     list
@@ -38,6 +37,11 @@ _rakudobrew() {
     which
     whence
   '
+  echo "$commands"
+}
+
+_rakudobrew() {
+  local cur="${COMP_WORDS[COMP_CWORD]}"
   local backends='
     jvm
     moar
@@ -46,6 +50,7 @@ _rakudobrew() {
 
   case "$COMP_CWORD" in
     1)
+      commands="$(_rakudobrew_commands)"
       COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
       ;;
     *)
