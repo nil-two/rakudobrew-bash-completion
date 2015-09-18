@@ -7,11 +7,13 @@ _rakudobrew_which() {
     "$prefix/$version/install/bin"
     "$prefix/$version/install/share/perl6/site/bin"
   )
+  local bins=""
   for path in "${paths[@]}"; do
     if [ -d "$path" ]; then
-      ls "$path"
+      bins="$bins $(ls "$path")"
     fi
   done
+  COMPREPLY=( $(compgen -W "$bins" -- "$cur") )
 }
 
 _rakudobrew_commands() {
@@ -37,7 +39,7 @@ _rakudobrew_commands() {
     which
     whence
   '
-  echo "$commands"
+  COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
 }
 
 _rakudobrew() {
@@ -50,8 +52,7 @@ _rakudobrew() {
 
   case "$COMP_CWORD" in
     1)
-      commands="$(_rakudobrew_commands)"
-      COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
+      _rakudobrew_commands
       ;;
     *)
       case "${COMP_WORDS[1]}" in
@@ -80,8 +81,7 @@ _rakudobrew() {
           COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
           ;;
         which)
-          commands="$(_rakudobrew_which)"
-          COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
+          _rakudobrew_which
           ;;
       esac
       ;;
