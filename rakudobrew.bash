@@ -17,28 +17,14 @@ _rakudobrew_which() {
 }
 
 _rakudobrew_commands() {
-  local commands='
-    current
-    list
-    list-available
-    build
-    build-panda
-    triple
-    rehash
-    switch
-    nuke
-    self-upgrade
-    test
-    exec
-    init
-    shell
-    local
-    global
-    version
-    versions
-    which
-    whence
-  '
+  local commands="$(
+    rakudobrew help |\
+    awk '{
+      for (i = 1; i <= NF; ++i)
+        if ($i == "rakudobrew")
+          print $(i+1);
+    }'
+  )"
   COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
 }
 
