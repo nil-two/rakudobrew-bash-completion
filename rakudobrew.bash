@@ -58,6 +58,15 @@ _rakudobrew() {
           versions="$(rakudobrew versions | cut -c3-)"
           COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
           ;;
+        which)
+          local version="$(rakudobrew version)"
+          local prefix="$(type -P rakudobrew)"; prefix="${prefix%%/bin/*}"
+          local paths="
+            $([ -d "$prefix/$version/install/bin" ] && ls "$prefix/$version/install/bin")
+            $([ -d "$prefix/$version/install/share/perl6/site/bin" ] && ls "$prefix/$version/install/share/perl6/site/bin")
+          "
+          COMPREPLY=( $(compgen -W "$paths" -- "$cur") )
+          ;;
       esac
       ;;
   esac
