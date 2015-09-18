@@ -1,3 +1,19 @@
+_rakudobrew_which() {
+  local version="$(rakudobrew version)"
+  local prefix="$(type -P rakudobrew)"
+  prefix="${prefix%%/bin/*}"
+
+  local paths=(
+    "$prefix/$version/install/bin"
+    "$prefix/$version/install/share/perl6/site/bin"
+  )
+  for path in "${paths[@]}"; do
+    if [ -d "$path" ]; then
+      ls "$path"
+    fi
+  done
+}
+
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
   local commands='
@@ -59,13 +75,8 @@ _rakudobrew() {
           COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
           ;;
         which)
-          local version="$(rakudobrew version)"
-          local prefix="$(type -P rakudobrew)"; prefix="${prefix%%/bin/*}"
-          local paths="
-            $([ -d "$prefix/$version/install/bin" ] && ls "$prefix/$version/install/bin")
-            $([ -d "$prefix/$version/install/share/perl6/site/bin" ] && ls "$prefix/$version/install/share/perl6/site/bin")
-          "
-          COMPREPLY=( $(compgen -W "$paths" -- "$cur") )
+          commands="$(_rakudobrew_which)"
+          COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
           ;;
       esac
       ;;
