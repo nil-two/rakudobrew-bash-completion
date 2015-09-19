@@ -68,7 +68,7 @@ _rakudobrew() {
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
          exec)   _rakudobrew_exec ;;
-         test)   _rakudobrew_backends 'all' ;;
+         test)   _rakudobrew_versions 'all' ;;
          local)  _rakudobrew_versions ;;
          global) _rakudobrew_versions ;;
          which)  _rakudobrew_which ;;
