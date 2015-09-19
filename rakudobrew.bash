@@ -9,6 +9,19 @@ _rakudobrew_which() {
   COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
 }
 
+_rakudobrew_whence() {
+  local versions="$(rakudobrew versions | cut -c3-)"
+  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
+
+  local programs="$(
+    for version in $versions; do
+      ls "$prefix/$version/install/bin" 2> /dev/null
+      ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
+    done
+  )"
+  COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
+}
+
 _rakudobrew_commands() {
   local commands="$(
     rakudobrew help |\
@@ -65,6 +78,7 @@ _rakudobrew() {
         local)  _rakudobrew_versions ;;
         global) _rakudobrew_versions ;;
         which)  _rakudobrew_which ;;
+        whence) _rakudobrew_whence ;;
       esac ;;
   esac
 }
