@@ -58,7 +58,6 @@ _rakudobrew_build() {
   case "$cur" in
     -*)
       COMPREPLY=('--configure-opts=')
-      compopt -o nospace
       ;;
     *)
       _rakudobrew_backends
@@ -89,5 +88,6 @@ _rakudobrew() {
          whence) _rakudobrew_whence ;;
        esac ;;
   esac
+  [[ $COMPREPLY == *= ]] && compopt -o nospace
 }
 complete -F _rakudobrew rakudobrew
