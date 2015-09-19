@@ -63,6 +63,13 @@ _rakudobrew_build() {
   esac
 }
 
+_rakudobrew_exec() {
+  case "$COMP_CWORD" in
+    2) _rakudobrew_which ;;
+    *) _command_offset 2 ;;
+  esac
+}
+
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
   case "$COMP_CWORD" in
@@ -71,6 +78,7 @@ _rakudobrew() {
          build)  _rakudobrew_build ;;
          switch) _rakudobrew_backends ;;
          nuke)   _rakudobrew_backends ;;
+         exec)   _rakudobrew_exec ;;
          test)   _rakudobrew_backends --allow-all ;;
          local)  _rakudobrew_versions ;;
          global) _rakudobrew_versions ;;
