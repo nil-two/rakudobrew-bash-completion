@@ -1,19 +1,12 @@
 _rakudobrew_which() {
   local version="$(rakudobrew version)"
-  local prefix="$(type -P rakudobrew)"
-  prefix="${prefix%%/bin/*}"
+  local prefix="$(type -P rakudobrew)"; prefix="${prefix%%/bin/*}"
 
-  local paths=(
-    "$prefix/$version/install/bin"
-    "$prefix/$version/install/share/perl6/site/bin"
-  )
-  local bins=""
-  for path in "${paths[@]}"; do
-    if [ -d "$path" ]; then
-      bins="$bins $(ls "$path")"
-    fi
-  done
-  COMPREPLY=( $(compgen -W "$bins" -- "$cur") )
+  local programs="
+    $(ls "$prefix/$version/install/bin" 2> /dev/null)
+    $(ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null)
+  "
+  COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
 }
 
 _rakudobrew_commands() {
