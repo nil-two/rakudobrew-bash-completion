@@ -60,33 +60,17 @@ _rakudobrew_build() {
 
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
-
   case "$COMP_CWORD" in
-    1)
-      _rakudobrew_commands
-      ;;
-    *)
-      case "${COMP_WORDS[1]}" in
-        build)
-          _rakudobrew_build
-          ;;
-        switch)
-          _rakudobrew_backends
-          ;;
-        nuke)
-          _rakudobrew_backends
-          ;;
-        test)
-          _rakudobrew_backends --allow-all
-          ;;
-        local|global)
-          _rakudobrew_versions
-          ;;
-        which)
-          _rakudobrew_which
-          ;;
-      esac
-      ;;
+    1) _rakudobrew_commands ;;
+    *) case "${COMP_WORDS[1]}" in
+        build)  _rakudobrew_build ;;
+        switch) _rakudobrew_backends ;;
+        nuke)   _rakudobrew_backends ;;
+        test)   _rakudobrew_backends --allow-all ;;
+        local)  _rakudobrew_versions ;;
+        global) _rakudobrew_versions ;;
+        which)  _rakudobrew_which ;;
+      esac ;;
   esac
 }
 complete -F _rakudobrew rakudobrew
