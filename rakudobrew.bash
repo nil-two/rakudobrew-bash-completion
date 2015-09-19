@@ -1,6 +1,6 @@
 _rakudobrew_which() {
   local version="$(rakudobrew version)"
-  local prefix="$(type -P rakudobrew)"; prefix="${prefix%%/bin/*}"
+  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
 
   local programs="
     $(ls "$prefix/$version/install/bin" 2> /dev/null)
@@ -28,7 +28,7 @@ _rakudobrew_commands() {
     awk '{
       for (i = 1; i <= NF; ++i)
         if ($i == "rakudobrew")
-          print $(i+1);
+          print $(i + 1);
     }'
   )"
   COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
@@ -47,10 +47,7 @@ _rakudobrew_backends() {
 }
 
 _rakudobrew_versions() {
-  local versions="$(
-    rakudobrew versions |\
-    cut -c3-
-  )"
+  local versions="$(rakudobrew versions | cut -c3-)"
   COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
 }
 
