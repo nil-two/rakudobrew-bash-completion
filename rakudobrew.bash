@@ -52,10 +52,6 @@ _rakudobrew_versions() {
   COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
 }
 
-_rakudobrew_build() {
-  _rakudobrew_backends 'all' '--configure-opts='
-}
-
 _rakudobrew_exec() {
   case "$COMP_CWORD" in
     2) _rakudobrew_which ;;
@@ -68,7 +64,7 @@ _rakudobrew() {
   case "$COMP_CWORD" in
     1) _rakudobrew_commands ;;
     *) case "${COMP_WORDS[1]}" in
-         build)  _rakudobrew_build ;;
+         build)  _rakudobrew_backends 'all' '--configure-opts=' ;;
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
          exec)   _rakudobrew_exec ;;
