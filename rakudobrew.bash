@@ -46,6 +46,18 @@ _rakudobrew_versions() {
   COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
 }
 
+_rakudobrew_build() {
+  case "$cur" in
+    -*)
+      COMPREPLY=('--configure-opts=')
+      compopt -o nospace
+      ;;
+    *)
+      _rakudobrew_backends
+      ;;
+  esac
+}
+
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
 
@@ -56,15 +68,7 @@ _rakudobrew() {
     *)
       case "${COMP_WORDS[1]}" in
         build)
-          case "$cur" in
-            -*)
-              COMPREPLY=('--configure-opts=')
-              compopt -o nospace
-              ;;
-            *)
-              _rakudobrew_backends --allow-all
-              ;;
-          esac
+          _rakudobrew_build
           ;;
         switch)
           _rakudobrew_backends
