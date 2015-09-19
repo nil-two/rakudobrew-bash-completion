@@ -79,8 +79,8 @@ _rakudobrew() {
     1) _rakudobrew_commands ;;
     *) case "${COMP_WORDS[1]}" in
          build)  _rakudobrew_build ;;
-         switch) _rakudobrew_backends ;;
-         nuke)   _rakudobrew_backends ;;
+         switch) _rakudobrew_versions ;;
+         nuke)   _rakudobrew_versions ;;
          exec)   _rakudobrew_exec ;;
          test)   _rakudobrew_backends --allow-all ;;
          local)  _rakudobrew_versions ;;
