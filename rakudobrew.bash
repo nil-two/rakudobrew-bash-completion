@@ -48,7 +48,7 @@ _rakudobrew_backends() {
 }
 
 _rakudobrew_versions() {
-  local versions="$(rakudobrew versions | cut -c3-)"
+  local versions="$(rakudobrew versions | cut -c3-) $@"
   COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
 }
 
