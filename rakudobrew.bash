@@ -38,6 +38,14 @@ _rakudobrew_backends() {
   COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
 }
 
+_rakudobrew_versions() {
+  local versions="$(
+    rakudobrew versions |\
+    cut -c3-
+  )"
+  COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
+}
+
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
 
@@ -68,8 +76,7 @@ _rakudobrew() {
           _rakudobrew_backends --allow-all
           ;;
         local|global)
-          versions="$(rakudobrew versions | cut -c3-)"
-          COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
+          _rakudobrew_versions
           ;;
         which)
           _rakudobrew_which
