@@ -38,13 +38,11 @@ _rakudobrew_commands() {
 }
 
 _rakudobrew_backends() {
-  local all=''
-  [ "$1" = '--allow-all' ] && all='all'
   local backends="
     jvm
     moar
     pre-glr
-    $all
+    $@
   "
   COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
 }
@@ -55,14 +53,7 @@ _rakudobrew_versions() {
 }
 
 _rakudobrew_build() {
-  case "$cur" in
-    -*)
-      COMPREPLY=('--configure-opts=')
-      ;;
-    *)
-      _rakudobrew_backends
-      ;;
-  esac
+  _rakudobrew_backends 'all' '--configure-opts='
 }
 
 _rakudobrew_exec() {
@@ -81,7 +72,7 @@ _rakudobrew() {
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
          exec)   _rakudobrew_exec ;;
-         test)   _rakudobrew_backends --allow-all ;;
+         test)   _rakudobrew_backends 'all' ;;
          local)  _rakudobrew_versions ;;
          global) _rakudobrew_versions ;;
          which)  _rakudobrew_which ;;
