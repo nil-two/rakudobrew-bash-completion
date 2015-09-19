@@ -28,13 +28,18 @@ _rakudobrew_commands() {
   COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
 }
 
-_rakudobrew() {
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-  local backends='
+_rakudobrew_backends() {
+  local backends="
     jvm
     moar
     pre-glr
-  '
+    $([ "$1" = '--allow-all' ] && echo all)
+  "
+  COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
+}
+
+_rakudobrew() {
+  local cur="${COMP_WORDS[COMP_CWORD]}"
 
   case "$COMP_CWORD" in
     1)
@@ -49,18 +54,18 @@ _rakudobrew() {
               compopt -o nospace
               ;;
             *)
-              COMPREPLY=( $(compgen -W "$backends all" -- "$cur") )
+              _rakudobrew_backends --allow-all
               ;;
           esac
           ;;
         switch)
-          COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
+          _rakudobrew_backends
           ;;
         nuke)
-          COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
+          _rakudobrew_backends
           ;;
         test)
-          COMPREPLY=( $(compgen -W "$backends all" -- "$cur") )
+          _rakudobrew_backends --allow-all
           ;;
         local|global)
           versions="$(rakudobrew versions | cut -c3-)"
