@@ -69,6 +69,7 @@ _rakudobrew() {
          nuke)   _rakudobrew_versions ;;
          exec)   _rakudobrew_exec ;;
          test)   _rakudobrew_versions 'all' ;;
+         shell)  _rakudobrew_versions '--unset' ;;
          local)  _rakudobrew_versions ;;
          global) _rakudobrew_versions ;;
          which)  _rakudobrew_which ;;
