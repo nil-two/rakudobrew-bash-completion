@@ -19,7 +19,10 @@ _rakudobrew_whence() {
       ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
     done
   )"
-  COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
+  case "$COMP_CWORD" in
+    2) COMPREPLY=( $(compgen -W "$programs --path" -- "$cur") ) ;;
+    *) COMPREPLY=( $(compgen -W "$programs" -- "$cur") ) ;;
+  esac
 }
 
 _rakudobrew_commands() {
