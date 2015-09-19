@@ -22,11 +22,13 @@ _rakudobrew_commands() {
 }
 
 _rakudobrew_backends() {
+  local all=''
+  [ "$1" = '--allow-all' ] && all='all'
   local backends="
     jvm
     moar
     pre-glr
-    $([ "$1" = '--allow-all' ] && echo all)
+    $all
   "
   COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
 }
