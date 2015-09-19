@@ -1,30 +1,3 @@
-_rakudobrew_which() {
-  local version="$(rakudobrew version)"
-  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
-
-  local programs="
-    $(ls "$prefix/$version/install/bin" 2> /dev/null)
-    $(ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null)
-  "
-  COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
-}
-
-_rakudobrew_whence() {
-  local versions="$(rakudobrew versions | cut -c3-)"
-  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
-
-  local programs="$(
-    for version in $versions; do
-      ls "$prefix/$version/install/bin" 2> /dev/null
-      ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
-    done
-  )"
-  case "$COMP_CWORD" in
-    2) COMPREPLY=( $(compgen -W "$programs --path" -- "$cur") ) ;;
-    *) COMPREPLY=( $(compgen -W "$programs" -- "$cur") ) ;;
-  esac
-}
-
 _rakudobrew_commands() {
   local commands="$(
     rakudobrew help |\
@@ -59,6 +32,33 @@ _rakudobrew_exec() {
   esac
 }
 
+_rakudobrew_which() {
+  local version="$(rakudobrew version)"
+  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
+
+  local programs="
+    $(ls "$prefix/$version/install/bin" 2> /dev/null)
+    $(ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null)
+  "
+  COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
+}
+
+_rakudobrew_whence() {
+  local versions="$(rakudobrew versions | cut -c3-)"
+  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
+
+  local programs="$(
+    for version in $versions; do
+      ls "$prefix/$version/install/bin" 2> /dev/null
+      ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
+    done
+  )"
+  case "$COMP_CWORD" in
+    2) COMPREPLY=( $(compgen -W "$programs --path" -- "$cur") ) ;;
+    *) COMPREPLY=( $(compgen -W "$programs" -- "$cur") ) ;;
+  esac
+}
+
 _rakudobrew() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
   case "$COMP_CWORD" in
@@ -67,8 +67,8 @@ _rakudobrew() {
          build)  _rakudobrew_backends 'all' '--configure-opts=' ;;
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
-         exec)   _rakudobrew_exec ;;
          test)   _rakudobrew_versions 'all' ;;
+         exec)   _rakudobrew_exec ;;
          shell)  _rakudobrew_versions '--unset' ;;
          local)  _rakudobrew_versions ;;
          global) _rakudobrew_versions ;;
