@@ -75,6 +75,6 @@ _rakudobrew() {
          whence) _rakudobrew_whence ;;
        esac ;;
   esac
-  [[ $COMPREPLY == *= ]] && compopt -o nospace
+  [[ ${COMPREPLY[0]} == *= ]] && compopt -o nospace
 }
 complete -F _rakudobrew rakudobrew
