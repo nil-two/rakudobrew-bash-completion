@@ -15,14 +15,13 @@ _rakudobrew_backends() {
     jvm
     moar
     pre-glr
-    $@
   "
-  COMPREPLY=( $(compgen -W "$backends" -- "$cur") )
+  COMPREPLY=( $(compgen -W "$backends $*" -- "$cur") )
 }
 
 _rakudobrew_versions() {
-  local versions="$(rakudobrew versions | cut -c3-) $@"
-  COMPREPLY=( $(compgen -W "$versions" -- "$cur") )
+  local versions="$(rakudobrew versions | cut -c3-)"
+  COMPREPLY=( $(compgen -W "$versions $*" -- "$cur") )
 }
 
 _rakudobrew_exec() {
