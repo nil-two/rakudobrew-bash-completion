@@ -35,10 +35,10 @@ _rakudobrew_which() {
   local version="$(rakudobrew version)"
   local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
 
-  local programs="
-    $(ls "$prefix/$version/install/bin" 2> /dev/null)
-    $(ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null)
-  "
+  local programs="$(
+    ls "$prefix/$version/install/bin" 2> /dev/null
+    ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
+  )"
   COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
 }
 
