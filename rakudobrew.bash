@@ -6,7 +6,7 @@ _rakudobrew_commands() {
         if ($i == "rakudobrew")
           print $(i + 1);
     }'
-  )"
+  ) help"
   COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
 }
 
