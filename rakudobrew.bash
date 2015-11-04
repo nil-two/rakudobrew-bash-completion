@@ -10,7 +10,7 @@ _rakudobrew_commands() {
   COMPREPLY=( $(compgen -W "$commands" -- "$cur") )
 }
 
-_rakudobrew_backends() {
+_rakudobrew_build() {
   local backends="
     jvm
     moar
@@ -63,7 +63,7 @@ _rakudobrew() {
   case "$COMP_CWORD" in
     1) _rakudobrew_commands ;;
     *) case "${COMP_WORDS[1]}" in
-         build)  _rakudobrew_backends 'all' 'panda' '--configure-opts=' ;;
+         build)  _rakudobrew_build 'all' 'panda' '--configure-opts=' ;;
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
          test)   _rakudobrew_versions 'all' ;;
