@@ -11,11 +11,19 @@ _rakudobrew_commands() {
 }
 
 _rakudobrew_build() {
-  local backends="
-    jvm
-    moar
-    pre-glr
-  "
+  local backends="$(
+    rakudobrew help |\
+    awk '
+      $2 == "build" {
+        gsub(/\|/, "\n", $3)
+        print($3)
+      }
+      $2 ~ "build-" {
+        gsub(/build-/, "", $2)
+        print($2)
+      }
+    '
+  ) --configure-opts="
   COMPREPLY=( $(compgen -W "$backends $*" -- "$cur") )
 }
 
@@ -63,7 +71,7 @@ _rakudobrew() {
   case "$COMP_CWORD" in
     1) _rakudobrew_commands ;;
     *) case "${COMP_WORDS[1]}" in
-         build)  _rakudobrew_build 'all' 'panda' '--configure-opts=' ;;
+         build)  _rakudobrew_build ;;
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
          test)   _rakudobrew_versions 'all' ;;
