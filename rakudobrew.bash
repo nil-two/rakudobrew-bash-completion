@@ -28,7 +28,7 @@ _rakudobrew_build() {
 }
 
 _rakudobrew_versions() {
-  local versions="$(rakudobrew versions | cut -c3-)"
+  local versions="$(rakudobrew versions 2> /dev/null | cut -c3-)"
   COMPREPLY=( $(compgen -W "$versions $*" -- "$cur") )
 }
 
@@ -40,7 +40,7 @@ _rakudobrew_exec() {
 }
 
 _rakudobrew_which() {
-  local version="$(rakudobrew version)"
+  local version="$(rakudobrew version 2> /dev/null)"
   local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
 
   local programs="$(
@@ -51,7 +51,7 @@ _rakudobrew_which() {
 }
 
 _rakudobrew_whence() {
-  local versions="$(rakudobrew versions | cut -c3-)"
+  local versions="$(rakudobrew versions 2> /dev/null | cut -c3-)"
   local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
 
   local programs="$(
