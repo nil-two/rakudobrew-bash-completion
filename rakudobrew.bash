@@ -41,7 +41,8 @@ _rakudobrew_exec() {
 
 _rakudobrew_which() {
   local version="$(rakudobrew version 2> /dev/null)"
-  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
+  local prefix="$(type -p rakudobrew)"
+  prefix="${prefix%/bin/*}"
 
   local programs="$(
     ls "$prefix/$version/install/bin" 2> /dev/null
@@ -52,7 +53,8 @@ _rakudobrew_which() {
 
 _rakudobrew_whence() {
   local versions="$(rakudobrew versions 2> /dev/null | cut -c3-)"
-  local prefix="$(type -P rakudobrew | sed 's#/bin/[^/]*$##')"
+  local prefix="$(type -p rakudobrew)"
+  prefix="${prefix%/bin/*}"
 
   local programs="$(
     for version in $versions; do
