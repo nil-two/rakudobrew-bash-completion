@@ -11,7 +11,7 @@ _rakudobrew_commands() {
 }
 
 _rakudobrew_build() {
-  local backends="$(
+  local implements="$(
     rakudobrew help |\
     awk '
       $2 == "build" {
@@ -20,7 +20,7 @@ _rakudobrew_build() {
       }
     '
   ) --configure-opts="
-  COMPREPLY=( $(compgen -W "$backends $*" -- "$cur") )
+  COMPREPLY=( $(compgen -W "$implements $*" -- "$cur") )
 }
 
 _rakudobrew_versions() {
