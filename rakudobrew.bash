@@ -18,10 +18,6 @@ _rakudobrew_build() {
         gsub(/\|/, "\n", $3)
         print($3)
       }
-      $2 ~ "build-" {
-        gsub(/build-/, "", $2)
-        print($2)
-      }
     '
   ) --configure-opts="
   COMPREPLY=( $(compgen -W "$backends $*" -- "$cur") )
