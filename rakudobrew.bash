@@ -24,33 +24,33 @@ _rakudobrew_build() {
 }
 
 _rakudobrew_versions() {
-  local versions="$(rakudobrew versions 2> /dev/null | cut -c3-)"
+  local versions=$(rakudobrew versions 2> /dev/null | cut -c3-)
   COMPREPLY=( $(compgen -W "$versions $*" -- "$cur") )
 }
 
 _rakudobrew_exec() {
-  case "$COMP_CWORD" in
+  case $COMP_CWORD in
     2) _rakudobrew_which ;;
     *) _command_offset 2 ;;
   esac
 }
 
 _rakudobrew_which() {
-  local version="$(rakudobrew version 2> /dev/null)"
-  local prefix="$(type -p rakudobrew)"
-  prefix="${prefix%/bin/*}"
+  local version=$(rakudobrew version 2> /dev/null)
+  local prefix=$(type -p rakudobrew)
+  prefix=${prefix%/bin/*}
 
-  local programs="$(
+  local programs=$(
     ls "$prefix/$version/install/bin" 2> /dev/null
     ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
-  )"
+  )
   COMPREPLY=( $(compgen -W "$programs" -- "$cur") )
 }
 
 _rakudobrew_whence() {
-  local versions="$(rakudobrew versions 2> /dev/null | cut -c3-)"
-  local prefix="$(type -p rakudobrew)"
-  prefix="${prefix%/bin/*}"
+  local versions=$(rakudobrew versions 2> /dev/null | cut -c3-)
+  local prefix=$(type -p rakudobrew)
+  prefix=${prefix%/bin/*}
 
   local programs="$(
     for version in $versions; do
@@ -58,17 +58,17 @@ _rakudobrew_whence() {
       ls "$prefix/$version/install/share/perl6/site/bin" 2> /dev/null
     done
   )"
-  case "$COMP_CWORD" in
+  case $COMP_CWORD in
     2) COMPREPLY=( $(compgen -W "$programs --path" -- "$cur") ) ;;
     *) COMPREPLY=( $(compgen -W "$programs" -- "$cur") ) ;;
   esac
 }
 
 _rakudobrew() {
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-  case "$COMP_CWORD" in
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  case $COMP_CWORD in
     1) _rakudobrew_commands ;;
-    *) case "${COMP_WORDS[1]}" in
+    *) case ${COMP_WORDS[1]} in
          build)  _rakudobrew_build ;;
          switch) _rakudobrew_versions ;;
          nuke)   _rakudobrew_versions ;;
